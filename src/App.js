@@ -1,8 +1,18 @@
 import React from 'react';
+import HomePage from './components/HomePage';
+import Theme from './Theme';
+import {
+  CssBaseline,
+} from "@material-ui/core";
+const App = () => {
 
-function App() {
   return (
-    <h1>Hello world!</h1>
+    <>
+      <CssBaseline />
+      <Theme>
+        <HomePage />
+      </Theme>
+    </>
   );
 }
 
