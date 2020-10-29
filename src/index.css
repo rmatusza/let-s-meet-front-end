@@ -1,9 +1,23 @@
 /* TODO Add site wide styles */
 
+.home-page{
+  background-color:#ffffff;
+  height: 100%;
+}
+
+html, body{
+  height: 100%;
+  background-color:#ffffff;
+}
+
+#root{
+  height: 100%;
+}
+
 .banner-component {
   display: flex;
   box-sizing: border-box;
-  background-color:#e6e6e6;
+  background-color: #ffffff;
   width: 100%;
   height: 80px;
   justify-content: space-between;
@@ -91,13 +105,14 @@
 }
 
 #root{
-  background-color: rgba(201,198,179);
+  background-color: #ffffff;
   /* height: 100%; */
 }
 
 .navbar-container{
   display: flex;
   background-color: black;
+  /* position: sticky; */
   position: absolute;
   width: 1300px;
   height: 100px;
@@ -137,4 +152,40 @@
 input::placeholder {
   font-size: 25px;
   font-family: sans-serif;
+}
+
+.groups-container{
+  /* display: grid; */
+  /* display: flex; */
+  /* border: 1px solid red; */
+  margin-top: 75px;
+  height: 100%;
+  margin-left: 117px;
+  margin-right: 100px;
+  /* justify-content: space-around; */
+  /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr; */
+  /* grid-template-rows: auto; */
+}
+
+
+.group-card{
+  display: flex;
+  height: 100%;
+  align-items: flex-end;
+  font-size: 30px;
+  justify-content: center;
+  
+}
+
+.group-card-component:hover{
+  border: 2px solid black;
+}
+
+.group-card:hover{
+  cursor: pointer;
+}
+
+.group-name{
+  color: white;
+  font-size: 25px;
 }

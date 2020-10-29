@@ -1,6 +1,7 @@
 import React from 'react';
 import Banner from './Banner'
 import NavBar from './NavBar'
+import Groups from './Groups'
 
 const HomePage = () => {
   localStorage.setItem('ryan', 14)
@@ -10,6 +11,7 @@ const HomePage = () => {
     <div className="home-page">
       <Banner userId={user_id} username={username} />
       <NavBar />
+      {/* <Groups /> */}
     </div>
   )
 }
