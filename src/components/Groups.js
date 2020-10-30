@@ -36,18 +36,18 @@ const Groups = (props) => {
   const history = useHistory();
 
   const handleClick = async (e) => {
-    console.log(e.target.id)
+    // console.log(e.target.id)
     if(e.target.id){
       await history.replace(`/groups/${e.target.id}`)
     }
   }
 
   const classes = useStyles()
-  console.log(classes)
+  // console.log(classes)
 
   // console.log(props.groups)
   const groups = props.groups
-  console.log('ACTION AREA:', CardActionArea)
+  // console.log('ACTION AREA:', CardActionArea)
   return(
     <>
       <div className="groups-container">

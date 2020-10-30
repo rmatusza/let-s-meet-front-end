@@ -205,6 +205,14 @@ input::placeholder {
   background-color: rgb(236, 236, 236) ;
 }
 
+.join-group{
+  display: flex;
+}
+
+.PrivateSwitchBase-input-11{
+  padding-right: 5px;
+}
+
 .group-info-container-left{
   /* display: grid;
   grid-template-columns: 1fr 1fr;
@@ -255,16 +263,12 @@ input::placeholder {
 
 
 .events-container{
-  /* display: flex; */
   box-sizing: border-box;
   margin-top: 50px;
   margin-bottom: 50px;
-  /* height: 100%; */
   width: 100%;
-  /* background-color: rgb(236, 236, 236) */
-  /* justify-content: center; */
-  /* text-align: center; */
   margin-left: 120px;
+  /* padding: 20px; */
 }
 
 .event-name{
@@ -302,16 +306,65 @@ input::placeholder {
 }
 
 .expandable-content--active{
+  display: flex;
   box-sizing: border-box;
   text-align: center;
-  max-height: 100px;
-  padding: 10px;
+  max-height: 100%;
+  /* padding: 10px; */
+  padding-top: 30px;
   border-radius: 5px;
-  padding-bottom: 50px;
+  /* padding-bottom: 40px; */
   background-color: rgb(236, 236, 236) ;
+}
+
+.event-description-left{
+  width: 800px;
+  height: 100%;
+  padding-left: 10px;
+  padding-right: 100px;
+  border-right: 2px solid black
+}
+
+.event-description-right-attending{
+  /* width: 800px; */
+  display: flex;
+  justify-content: center;
+}
+
+.event-description-right{
+  width: 800px;
+  height: 100%;;
 }
 
 .upcoming-events{
   margin-left: 130px;
   text-decoration: underline;
+}
+
+.checkbox-container{
+  display: flex;
+  justify-content: space-around;
+}
+
+.attending-form{
+  display: flex;
+  justify-content: center;
+  width: 300px;
+}
+
+.count-me-in{
+  box-sizing: border-box;
+  margin-left: 5px;
+  /* margin-bottom: 50px; */
+  /* padding: 30px; */
+  align-self: center;
+}
+
+.count-me-in:hover{
+  cursor: pointer;
+}
+
+.label-for-attending-button{
+  display: flex;
+  align-items: center;
 }
