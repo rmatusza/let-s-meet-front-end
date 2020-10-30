@@ -9,16 +9,17 @@ import { BsFillPersonFill } from "react-icons/bs";
 import { CardActionArea, Grid, Paper } from "@material-ui/core";
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import { BiDownArrow } from "react-icons/bi";
+import { BiDownArrow  } from "react-icons/bi";
 import { BiUpArrow } from "react-icons/bi";
+import { ContactsTwoTone } from '@material-ui/icons';
 
 
 const SpecificGroup = () => {
 
   const [group, setGroup] = useState({})
   const {id} = useParams()
-  const [clicked, setClicked] = useState(':inactive')
-
+  const [isActive, setisActive] = useState(<BiDownArrow />)
+  const [divState, setdivState] = useState('expandable-content--inactive')
 
   const useStyles = makeStyles((theme) => ({
     grid: {
@@ -52,6 +53,8 @@ const SpecificGroup = () => {
         const data = await res.json()
         // console.log(data)
         await setGroup(data)
+        console.log(data)
+
       } else {
         console.error('someting went wrong')
       }
@@ -62,8 +65,13 @@ const SpecificGroup = () => {
   },[])
 
 
-  const handleClick = () => {
-    console.log('works')
+  const handleClick = async () => {
+    console.log(isActive.type.name === "BiDownArrow")
+    await isActive.type.name === "BiUpArrow" ? setisActive(<BiDownArrow />) : setisActive(<BiUpArrow />)
+    // status =
+    await divState === "expandable-content--inactive" ? setdivState("expandable-content--active") : setdivState("expandable-content--inactive")
+    console.log(isActive)
+    console.log(divState)
   }
 
 
@@ -119,11 +127,16 @@ const SpecificGroup = () => {
 
       </div>
 
+      <h1 className="upcoming-events">Upcoming Events</h1>
+
       <div className="events-container">
 
         {Object.keys(group).length ? group.eventData.map((event, idx) => {
           return (
-            <Grid item xs={5} md={10}>
+            <Grid item xs={5} md={10} key={idx}>
+               <div>
+                  <h3>{event.date_start}</h3>
+                </div>
               <CardActionArea >
                 <Card className={classes.paper}>
                   <div className="event-card" key={idx} onClick={handleClick} >
@@ -133,13 +146,18 @@ const SpecificGroup = () => {
                             {event.name}
                           </span>
                           <span className="expand-arrow">
-                            <BiDownArrow />
+                            {isActive}
                           </span>
+
                         </div>
+
                       </CardContent>
                   </div>
                 </Card>
               </CardActionArea>
+                <div className={divState}>
+                  {event.description}
+                </div>
             </Grid>
           )
         }) : console.log('Loading...')}

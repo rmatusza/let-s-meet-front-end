@@ -255,14 +255,16 @@ input::placeholder {
 
 
 .events-container{
-  display: flex;
+  /* display: flex; */
   box-sizing: border-box;
   margin-top: 50px;
   margin-bottom: 50px;
   /* height: 100%; */
   width: 100%;
   /* background-color: rgb(236, 236, 236) */
-  justify-content: center;
+  /* justify-content: center; */
+  /* text-align: center; */
+  margin-left: 120px;
 }
 
 .event-name{
@@ -291,4 +293,25 @@ input::placeholder {
 .event-name-with-button{
   display: flex;
   justify-content: space-between;
+}
+
+.expandable-content--inactive{
+  height: 0;
+  overflow: hidden;
+  transition: max-height 2s;
+}
+
+.expandable-content--active{
+  box-sizing: border-box;
+  text-align: center;
+  max-height: 100px;
+  padding: 10px;
+  border-radius: 5px;
+  padding-bottom: 50px;
+  background-color: rgb(236, 236, 236) ;
+}
+
+.upcoming-events{
+  margin-left: 130px;
+  text-decoration: underline;
 }
