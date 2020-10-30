@@ -1,26 +1,18 @@
-import React from 'react';
+import React, {useState}  from 'react';
+import { useHistory } from 'react-router-dom'
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Paper } from "@material-ui/core";
-import clsx from 'clsx';
+import { CardActionArea, Grid, Paper } from "@material-ui/core";
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { Redirect } from "react-router-dom";
+
 
 
 
 const Groups = (props) => {
 
+  // const [groupId, setGroupId] = useState(null)
+  const [group, setGroup] = useState([])
   const useStyles = makeStyles((theme) => ({
     grid: {
       width: '100%',
@@ -41,39 +33,39 @@ const Groups = (props) => {
     }
   }));
 
-  const classes = useStyles()
+  const history = useHistory();
 
-  console.log(props.groups)
+  const handleClick = async (e) => {
+    console.log(e.target.id)
+    if(e.target.id){
+      await history.replace(`/groups/${e.target.id}`)
+    }
+  }
+
+  const classes = useStyles()
+  console.log(classes)
+
+  // console.log(props.groups)
   const groups = props.groups
+  console.log('ACTION AREA:', CardActionArea)
   return(
     <>
       <div className="groups-container">
-        {/* <Grid container spacing={2} className={classes.grid} >
-          {groups.map((group, idx) => {
-            return (
-              <Grid item xs={12} md={4}>
-                <Paper className={classes.paper} >
-                  <div className="group-card" key={idx} id={props.ids[idx]}>
-                    <span className="group-name">
-                      {group}
-                    </span>
-                  </div>
-                </Paper>
-              </Grid>
-            )
-          })}
-        </Grid> */}
         <Grid container spacing={2} className={classes.grid} >
           {groups.map((group, idx) => {
             return (
               <Grid item xs={12} md={4}>
-                <Paper className={classes.paper} >
-                  <div className="group-card" key={idx} id={props.ids[idx]}>
-                    <span className="group-name">
-                      {group}
-                    </span>
-                  </div>
-                </Paper>
+                <CardActionArea >
+                  <Card className={classes.paper}>
+                    <div className="group-card" key={idx} onClick={handleClick} id={props.ids[idx]}>
+                        <CardContent>
+                          <span className="group-name" id={props.ids[idx]}>
+                            {group}
+                          </span>
+                        </CardContent>
+                    </div>
+                  </Card>
+                </CardActionArea>
               </Grid>
             )
           })}

@@ -1,10 +1,6 @@
-import React, {useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import Container from '@material-ui/core/Container';
-import { Grid, Typography } from '@material-ui/core';
-import { palette } from '@material-ui/system';
-import Logo from '../images/logo.png'
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   myColor: {
@@ -12,20 +8,18 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-
-const Banner = (props) => {
+const Banner = () => {
   const classes = useStyles();
   const userName = localStorage.key(0)
-  return (
-    <>
-      <div className="banner-component">
+  return(
+    <div className="banner-component">
 
         {/* left side of banner */}
 
         <div className="left-side">
 
           <div className="logo-container">
-            <img src={Logo} className="logo"></img>
+            {/* <img src={Logo} className="logo"></img> */}
           </div>
 
           <div className="site-name-container">
@@ -48,24 +42,7 @@ const Banner = (props) => {
         </div>
 
       </div>
-
-      {/* sub banner -- maybe can make into its own component later */}
-
-      <div className="sub-banner">
-
-        <div className="catch-phrase">
-          <h1 className="catch-phrase-text">Find Your Next Event</h1>
-        </div>
-
-        <div className="events-nearby">
-          <h4 className="events-nearby-text">30 Events in Your Area</h4>
-        </div>
-
-      </div>
-
-    </>
   )
 }
 
-// bgcolor="primary.main" color="primary.contrastText" p={2}
 export default Banner;

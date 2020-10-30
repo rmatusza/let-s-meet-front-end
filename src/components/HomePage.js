@@ -1,5 +1,5 @@
 import React from 'react';
-import Banner from './Banner'
+import Banner from './SubBanner'
 import NavBar from './NavBar'
 import Groups from './Groups'
 
