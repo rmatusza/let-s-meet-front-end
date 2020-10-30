@@ -24,6 +24,7 @@ const SpecificGroup = () => {
   const [divState, setdivState] = useState('expandable-content--inactive')
   // const [isMember, setisMember] = useState('')
   const [checked, setChecked] = useState('Loading...')
+  const [eventChecked, setEventChecked] = useState('loading...')
 
   const useStyles = makeStyles((theme) => ({
     grid: {
@@ -81,15 +82,32 @@ const SpecificGroup = () => {
       }
     }
 
-
     fetchGroups()
     fetchMembershipState()
 
   },[])
-  console.log(checked)
+  console.log(eventChecked)
 
-  const handleClick = async () => {
+
+  const handleClick = async (e) => {
     // console.log(isActive.type.name === "BiDownArrow")
+    console.log(e.target.id)
+    const memberKey = localStorage.key(0)
+    const member_id = localStorage.getItem(memberKey)
+    const event_id = e.target.id
+    // console.log('EVENT ID:', event_id)
+
+    const res = await fetch(`http://localhost:8080/api/events/${event_id}/${member_id}`)
+
+    if(res.ok) {
+      const eventStatus = await res.json()
+      console.log('EVENT STATUS:', eventStatus)
+      eventStatus.content ? await setEventChecked(true) : await setEventChecked(false)
+
+    } else {
+      console.error('something went wrong')
+    }
+
     await isActive.type.name === "BiUpArrow" ? setisActive(<BiDownArrow />) : setisActive(<BiUpArrow />)
     // status =
     await divState === "expandable-content--inactive" ? setdivState("expandable-content--active") : setdivState("expandable-content--inactive")
@@ -126,6 +144,34 @@ const SpecificGroup = () => {
     // console.log(response)
   }
 
+  const joinEvent = async (e) => {
+    // console.log(e.target.id)
+    const memberKey = localStorage.key(0)
+    const member_id = localStorage.getItem(memberKey)
+    // console.log(member_id)
+    const event_id = e.target.id
+    const body = {member_id}
+    if(eventChecked === false){
+      await setEventChecked(true)
+      const res = await fetch(`http://localhost:8080/api/events/${event_id}/attend`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+      })
+    } else {
+        await setEventChecked(false)
+        const res = await fetch(`http://localhost:8080/api/events/${event_id}/unattend`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        })
+      }
+    // // console.log(response)
+  }
 
 
 
@@ -192,12 +238,12 @@ const SpecificGroup = () => {
                <div>
                   <h3>{event.date_start}</h3>
                 </div>
-              <CardActionArea >
-                <Card className={classes.paper}>
-                  <div className="event-card" key={idx} onClick={handleClick} >
-                      <CardContent>
+              <CardActionArea id={event.id}>
+                <Card className={classes.paper} id={event.id}>
+                  <div className="event-card" key={idx} onClick={handleClick} id={event.id} >
+                      <CardContent id={event.id}>
                         <div className="event-name-with-button">
-                          <span className="event-name" >
+                          <span className="event-name" id={event.id}>
                             {event.name}
                           </span>
                           <span className="expand-arrow">
@@ -221,7 +267,7 @@ const SpecificGroup = () => {
                     <div className="checkbox-container">
                       <form className="attending-form">
                         <label for="attending" className="label-for-attending-button">
-                          <Checkbox />
+                        <Checkbox className="join-group-checkbox" onClick={joinEvent} checked={eventChecked} id={event.id}/>
                         </label>
                         <div className="count-me-in">
                           <h4>Count Me In!</h4>
