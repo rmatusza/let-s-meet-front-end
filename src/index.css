@@ -58,6 +58,10 @@ html, body{
   display: inline-block;
 }
 
+.site-name-container:hover{
+  cursor: pointer;
+}
+
 .right-side{
   display: flex;
 }
@@ -159,6 +163,7 @@ input::placeholder {
   /* display: grid; */
   /* display: flex; */
   /* border: 1px solid red; */
+  box-sizing: border-box;
   margin-top: 75px;
   height: 100%;
   margin-left: 117px;
@@ -166,6 +171,7 @@ input::placeholder {
   /* justify-content: space-around; */
   /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr; */
   /* grid-template-rows: auto; */
+  background-color: rgba(236, 236, 236);
 }
 
 
@@ -314,7 +320,7 @@ input::placeholder {
   padding-top: 30px;
   border-radius: 5px;
   /* padding-bottom: 40px; */
-  background-color: rgb(236, 236, 236) ;
+  background-color: rgb(236, 236, 236);
 }
 
 .event-description-left{
@@ -367,4 +373,24 @@ input::placeholder {
 .label-for-attending-button{
   display: flex;
   align-items: center;
+}
+
+.group-events-toggle{
+  display: flex;
+  margin-left: 150px;
+  align-items: center;
+  width: 100px;
+  /* justify-content: space-between; */
+}
+
+.group-button{
+
+}
+
+.calendar{
+  position: relative;
+  box-sizing: border-box;
+  top: 70px;
+  left: 1150px;
+  padding: 10px;
 }

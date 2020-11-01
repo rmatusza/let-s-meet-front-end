@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Banner from './Banner'
 import SubBanner from './SubBanner';
+// import Events from './Events'
 import { makeStyles } from "@material-ui/core/styles";
 import { TiLocationOutline } from "react-icons/ti";
 import { BsFillPeopleFill } from "react-icons/bs";
@@ -12,12 +13,12 @@ import CardContent from '@material-ui/core/CardContent';
 import { BiDownArrow  } from "react-icons/bi";
 import { BiUpArrow } from "react-icons/bi";
 import Checkbox from '@material-ui/core/Checkbox';
-import { withStyles } from '@material-ui/core/styles';
-import { CheckBox } from '@material-ui/icons';
 
 
 
 const SpecificGroup = () => {
+  // const test = useContext(Calendar)
+  // console.log(test)
 
   const [group, setGroup] = useState({})
   const [isActive, setisActive] = useState(<BiDownArrow />)
@@ -270,7 +271,7 @@ const SpecificGroup = () => {
                         <Checkbox className="join-group-checkbox" onClick={joinEvent} checked={eventChecked} id={event.id}/>
                         </label>
                         <div className="count-me-in">
-                          <h4>Count Me In!</h4>
+                          <h3>Count Me In!</h3>
                         </div>
                       </form>
                     </div>

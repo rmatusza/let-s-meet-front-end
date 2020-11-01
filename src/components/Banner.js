@@ -1,6 +1,7 @@
 import React from 'react';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   myColor: {
@@ -11,6 +12,15 @@ const useStyles = makeStyles((theme) => ({
 const Banner = () => {
   const classes = useStyles();
   const userName = localStorage.key(0)
+  const history = useHistory();
+
+
+  const homePage = async () => {
+
+    await history.replace(`/`)
+
+  }
+
   return(
     <div className="banner-component">
 
@@ -22,7 +32,7 @@ const Banner = () => {
             {/* <img src={Logo} className="logo"></img> */}
           </div>
 
-          <div className="site-name-container">
+          <div className="site-name-container" onClick={homePage}>
             <h1 className="site-name">Let's Meet!</h1>
           </div>
 
