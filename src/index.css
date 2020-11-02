@@ -149,8 +149,8 @@ html, body{
 }
 
 .city-name{
-  color: white;
-  text-decoration: underline;
+  color: black;
+  /* text-decoration: underline; */
   margin-left: 20px;
 }
 
@@ -393,4 +393,150 @@ input::placeholder {
   top: 70px;
   left: 1150px;
   padding: 10px;
+}
+
+.your-events{
+  margin-left: 120px;
+  text-decoration: underline;
+}
+
+.no-events{
+  margin-left: 120px;
+}
+
+.your-grops-container{
+  margin-left: 120px;
+}
+
+.your-groups{
+  text-decoration: underline;
+  margin-left: 120px;
+}
+
+.signin-container{
+  display: flex;
+  height: 100%;
+  background-color: #023f57;
+}
+
+.signin-left-container{
+  width: 900px;
+  /* height: 100%; */
+  background-color: #023f57;
+}
+
+.signin-left{
+  box-sizing: border-box;
+  padding: 20px;
+  background-color: #023f57;
+  /* height: 100%; */
+  width: 900px;
+
+}
+
+.signin-site-name{
+  display: flex;
+  font-family: "freestyle script";
+  font-size: 40px;
+  margin-bottom: 20px;
+  justify-content: flex-start;
+}
+
+.site-name-text{
+  font-family: "freestyle script";
+  font-size: 50px;
+  position: absolute;
+  top: -30px;
+  color: rgb(218, 42, 42);
+  text-decoration: underline
+}
+
+.signin-right{
+  background-color:white;
+  /* height: 100%; */
+  width: 700px;
+}
+
+.catch-phrase-signin-container{
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 100px;
+  padding-right: 350px;
+  width: 900px;
+}
+
+.catch-phrase-signin-text{
+  margin-right: 100px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 70px;
+  padding: 10px;
+  align-self: flex-start;
+  color: white
+}
+
+.signin-text-container{
+  box-sizing: border-box;
+  margin-left: 60px;
+  margin-top: 90px;
+}
+
+.signin-text{
+  font-size: 40px;
+}
+
+.signin-form-container{
+  /* border: 2px solid black; */
+  border-radius: 10px;
+  margin: 50px;
+  height: 200px;
+  width: 320px;
+  background-color:#e6e6e6;
+  margin-bottom: 10px;
+}
+
+.signin-form{
+  height: 100%;
+}
+
+.username{
+  height: 40px;
+  width: 300px;
+  margin: 10px;
+  border-radius: 5px;
+  /* background-color: #023f57; */
+  color: #023f57;
+  background-color: white;
+}
+
+.username::placeholder{
+  color: #023f57;
+}
+
+.email{
+  height: 40px;
+  width: 300px;
+  margin: 10px;
+  border-radius: 5px;
+  /* background-color: #023f57; */
+  color: #023f57;
+  background-color: white;
+}
+
+.email::placeholder{
+  /* color: white; */
+  color: #023f57;
+}
+
+.password{
+  height: 40px;
+  width: 300px;
+  margin: 10px;
+  border-radius: 5px;
+  /* background-color: #023f57; */
+  color: #023f57;
+  background-color: white;
+}
+
+.password::placeholder{
+  color: #023f57;
 }

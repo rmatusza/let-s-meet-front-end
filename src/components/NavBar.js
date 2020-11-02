@@ -6,6 +6,7 @@ import CalendarComponent from './Calendar';
 import { makeStyles } from '@material-ui/core/styles';
 import {store} from '../store'
 import EventsHomePage from './EventsHomePage';
+import { BsFillPauseFill } from 'react-icons/bs';
 
 const NavBar = (props) => {
   const [inputValue, setInputValue] = useState('')
@@ -13,16 +14,49 @@ const NavBar = (props) => {
   const [groups, setGroups] = useState([])
   const [groupId, setIds] = useState([])
   const [eventsState, setEvents] = useState([])
+  const [eventsButton, setEventButton] = useState(true)
+  const [groupsButton, setGroupsButton] = useState(false)
 
   //---------------------------------------------------//
 
   let events;
+  const memberKey = localStorage.key(0)
+  const memberId = localStorage.getItem(memberKey)
+
+
+  useEffect(() => {
+    if(localStorage.getItem('city')) {
+      setCity(localStorage.getItem('city'))
+    }
+
+    const fetchUserGroups = async () => {
+      const res = await fetch(`http://localhost:8080/api/groups/users/${memberId}`)
+      let groupMatches = []
+      let groupIds = []
+      if(res.ok) {
+        const groupResponse = await res.json()
+        // await setGroups(groupResponse)
+        // console.log(groupResponse)
+        groupResponse.groups.forEach(group => {
+          let groupName = group.Group.name
+          let groupId = group.Group.id
+          // let lowerGroupName = groupName.toLowerCase()
+          groupMatches.push(groupName)
+          groupIds.push(groupId)
+          // console.log(group.Group.name)
+        })
+        setGroups(groupMatches)
+        setIds(groupIds)
+      }
+    }
+    fetchUserGroups()
+  }, [])
 
   const updateEvents = () => {
-    console.log(store.getState())
+    // console.log(store.getState())
     events = store.getState()
     setEvents(events)
-    console.log(events)
+    // console.log(events)
   }
 
   // useEffect(() => {
@@ -88,6 +122,41 @@ const NavBar = (props) => {
 
     console.error('something went wrong with the search')
   }
+
+  const handleCityInput = (e) => {
+    setCity(e.target.value)
+  }
+
+  const handleCityChange = (e) => {
+    e.preventDefault()
+    if (localStorage.getItem('city')) {
+      localStorage.removeItem('city')
+    }
+
+    localStorage.setItem('city', city)
+  }
+
+  const handleGroupClick = () => {
+    if(groupsButton) {
+      setGroupsButton(false)
+      setEventButton(true)
+    } else {
+      setGroupsButton(true)
+      setEventButton(false)
+    }
+  }
+
+  const handleEventClick = () => {
+    if(eventsButton) {
+      setEventButton(false)
+      setGroupsButton(true)
+    } else {
+      setEventButton(true)
+      setGroupsButton(false)
+    }
+  }
+
+
   return (
     <>
       <div className="navbar-container">
@@ -99,15 +168,33 @@ const NavBar = (props) => {
         </div>
 
         <div className="location-container">
-          City: <span className="city-name">Houston</span>
+          <form onSubmit={handleCityChange}>
+            City: <input className="city-name" defaultValue={city} onChange={handleCityInput} value={city}/>
+          </form>
         </div>
 
         <div className="group-events-toggle">
-          <div className="group-button">
-              <Button variant="outlined" color="primary" style={{color: "teal"}}>Groups</Button>
+          <div className="group-button" onClick={handleGroupClick}>
+            {(() => {
+              console.log('BUTTON STATE:', groupsButton)
+              if(groupsButton === false) {
+               return <Button variant="outlined" color="primary" style={{color: "teal"}}>Groups</Button>
+              } else {
+                return <Button variant="contained" color="primary">Groups</Button>
+              }
+            })()}
+
           </div>
-          <div className="event-button">
-          <Button variant="contained" color="primary">Events</Button>
+          <div className="event-button" onClick={handleEventClick}>
+          {(() => {
+              console.log('BUTTON STATE:', eventsButton)
+              if(eventsButton === false) {
+               return <Button variant="outlined" color="primary" style={{color: "teal"}}>Events</Button>
+              } else {
+                return <Button variant="contained" color="primary">Events</Button>
+              }
+            })()}
+
           </div>
         </div>
 
@@ -115,25 +202,23 @@ const NavBar = (props) => {
       <div className="calendar">
         <CalendarComponent />
       </div>
-{/*
-        {() =>{
-          if(eventsState) {
-            return (
-              <div>
-                <EventsHomePage events={events} />
-              </div>
-            )
-          } else {
-            return (
-              <div>
-                NO EVENTS
-              </div>
-            )
-          }
-        }} */}
+      {(() => {
+        if(eventsButton === true) {
+          return  <EventsHomePage events={eventsState} />
+        } else {
+          return
+        }
+      })()}
 
-      <EventsHomePage events={eventsState} />
-      <Groups groups={groups} ids={groupId} />
+      {(() => {
+        if(groupsButton === true) {
+          return  <Groups groups={groups} ids={groupId} />
+        } else {
+          return
+        }
+      })()}
+      {/* <Groups groups={groups} ids={groupId} /> */}
+
     </>
   )
 }

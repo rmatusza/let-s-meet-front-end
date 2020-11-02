@@ -26,6 +26,8 @@ const SpecificGroup = () => {
   // const [isMember, setisMember] = useState('')
   const [checked, setChecked] = useState('Loading...')
   const [eventChecked, setEventChecked] = useState('loading...')
+  const [groupMembers, setGroupMembers] = useState('')
+  const [eventMembers, setEventMembers] = useState('')
 
   const useStyles = makeStyles((theme) => ({
     grid: {
@@ -50,6 +52,7 @@ const SpecificGroup = () => {
   // let member;
   const classes = useStyles()
   const {id} = useParams()
+  console.log('HERE IS THE PARAMS ID:',id)
   useEffect(() => {
 
     const fetchGroups = async () => {
@@ -58,8 +61,11 @@ const SpecificGroup = () => {
       if(res.ok) {
         // console.log('hello')
         const data = await res.json()
-        // console.log(data)
+        console.log(data)
+        // console.log(data.eventData[0].attendes)
         await setGroup(data)
+        await setGroupMembers(data.groupData.members)
+        await setEventMembers(data.eventData[0].attendes)
         // console.log(data)
 
       } else {
@@ -122,6 +128,7 @@ const SpecificGroup = () => {
     // console.log(member_id)
     const body = {member_id}
       if(checked === false){
+
         await setChecked(true)
         const res = await fetch(`http://localhost:8080/api/groups/${id}/subscribe`, {
         method: 'POST',
@@ -129,19 +136,33 @@ const SpecificGroup = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
-      })
+        })
 
-      const response = await res.json()
-    } else {
-      await setChecked(false)
-      const res = await fetch(`http://localhost:8080/api/groups/${id}/unsubscribe`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-      })
-    }
+        // const response = await res.json()
+        // let updatedMembers = groupMembers
+        // const incrementMembers = await fetch(`http://localhost:8080/api/groups/${id}/increment`,{
+        //   method: 'PATCH',
+        //   headers: {'Content-Type': 'application/json'},
+        //   body: JSON.stringify(updatedMembers += 1)
+        // })
+
+        // if(incrementMembers.ok) {
+        //   const totalMembers = incrementMembers.json()
+        //   setGroupMembers(totalMembers)
+        // }
+
+      } else {
+        await setChecked(false)
+        const res = await fetch(`http://localhost:8080/api/groups/${id}/unsubscribe`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        })
+      }
+
+
     // console.log(response)
   }
 
@@ -209,7 +230,7 @@ const SpecificGroup = () => {
 
           <div className="number-of-members">
             <BsFillPeopleFill size={25}/>
-            TODO: Find # of members from DB
+            {groupMembers} members
           </div>
             <br></br>
           <div className="organizer">
@@ -263,7 +284,7 @@ const SpecificGroup = () => {
                   </div>
                   <div className="event-description-right">
                     <div className="event-description-right-attending">
-                      <BsFillPeopleFill size={25}/><span><h4>X People Going</h4></span>
+                      <BsFillPeopleFill size={25}/><span><h4>{eventMembers} People Going</h4></span>
                     </div>
                     <div className="checkbox-container">
                       <form className="attending-form">

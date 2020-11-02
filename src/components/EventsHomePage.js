@@ -14,7 +14,6 @@ const EventsHomePage = (props) => {
   const [divState, setdivState] = useState('expandable-content--inactive')
   const [checked, setChecked] = useState('Loading...')
   const [eventChecked, setEventChecked] = useState('loading...')
-  let divStateArr = [];
 
   const useStyles = makeStyles((theme) => ({
     grid: {
@@ -46,30 +45,6 @@ const EventsHomePage = (props) => {
     const memberKey = localStorage.key(0)
     const member_id = localStorage.getItem(memberKey)
     const event_id = e.target.id
-    // console.log(e.target.id)
-    // console.log(divStateObject[e.target.id].visibility)
-    // const changeObj = () => {
-    //   if(divStateObjectClone.visibility === "expandable-content--inactive") {
-    //     console.log('inactive so should change to active')
-    //     let updateObj = {}
-    //     updateObj[e.target.id] = {'visibility': "expandable-content--active", arrow: 'BiUpArrow'}
-    //     delete divStateArr[0]
-    //     // divStateArr.push(updateObj)
-    //     console.log(divStateArr)
-    //     return
-    //   }
-    //   else if(divStateObjectClone.visibility === "expandable-content--active"){
-    //     console.log('active so should change to inactive')
-    //     let updateObj = {}
-    //     updateObj[e.target.id] = {'visibility': "expandable-content--inactive", arrow: 'BiDownArrow'}
-    //     // delete divStateArr[0]
-    //     divStateArr.push(updateObj)
-    //     console.log(divStateArr)
-    //   }
-    // }
-    // await changeObj()
-
-    // setdivState(divStateObject)
 
     const res = await fetch(`http://localhost:8080/api/events/${event_id}/${member_id}`)
 
@@ -114,30 +89,28 @@ const EventsHomePage = (props) => {
           body: JSON.stringify(body)
         })
       }
-    // // console.log(response)
+
   }
-
-  // let divStateObject = {}
-
-  // const makeObj = () => props.events.forEach(event => {
-  //   // console.log('sfsdaff')
-  //   const stringId = event.id.toString()
-  //   let obj = {'visibility': "expandable-content--inactive", 'arrow': "BiDownArrow"}
-  //   divStateObject[stringId] = obj
-  //   divStateArr.push(divStateObject)
-  // })
-
-  // makeObj()
-  // let eventid = 5
-  // console.log(divStateObject)
-  // console.log(divStateObject['5'].visibility)
   return(
+    <>
+    <div className="your-events">
+      <h1 >
+        Your Events
+      </h1>
+    </div>
+    <div className="no-events">
+      {(() => {
+        if(props.events.length === 0) {
+          return <h3>No Events Scheduled for Today</h3>
+        }
+      })()}
+    </div>
     <div className="events-container">
       {props.events.map((event, idx) => {
         return (
           <Grid item xs={5} md={10} key={idx}>
             <div>
-                <h3>{event.date_start}</h3>
+                <h3>{event.date_start.slice(0, 10)}</h3>
               </div>
             <CardActionArea id={event.id}>
               <Card className={classes.paper} id={event.id}>
@@ -150,9 +123,7 @@ const EventsHomePage = (props) => {
                         <span className="expand-arrow">
                           {isActive}
                         </span>
-
                       </div>
-
                     </CardContent>
                 </div>
               </Card>
@@ -178,11 +149,11 @@ const EventsHomePage = (props) => {
                 </div>
               </div>
           </Grid>
-
         )
       })}
 
     </div>
+    </>
   )
 }
 

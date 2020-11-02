@@ -13,64 +13,88 @@ const CalendarComponent = () => {
 
 
 
-  const handleDateChange = async (e, currentDate) => {
+  const handleDateChange = async (e, date) => {
     const memberKey = localStorage.key(0)
     const userid = localStorage.getItem(memberKey)
-    console.log(currentDate)
+    console.log(date)
+    console.log(e)
     if(e) {
       setCurrentDate(e.target.value)
-    }
-    const res = await fetch(`http://localhost:8080/api/events/${currentDate}/${userid}`)
+      console.log(e.target.value)
+      const res = await fetch(`http://localhost:8080/api/events/${e.target.value}/${userid}`)
 
-    if(res.ok) {
-      const data = await res.json()
-      console.log(data.events)
-      setEvents(data)
-      store.dispatch(updateEvents(data.events))
+      const matchingEvents = []
+
+      if(res.ok) {
+        const data = await res.json()
+        data.events.forEach(event => {
+          if(event.date_start.slice(0, 10) === e.target.value) {
+            matchingEvents.push(event)
+          }
+        })
+        console.log(matchingEvents)
+        setEvents(matchingEvents)
+        store.dispatch(updateEvents(matchingEvents))
+      }
+      console.log(store.getState())
+
+    } else {
+      const res = await fetch(`http://localhost:8080/api/events/${date}/${userid}`)
+      const matchingEvents = []
+      if(res.ok) {
+        const data = await res.json()
+        data.events.forEach(event => {
+          if(event.date_start.slice(0, 10) === date) {
+            matchingEvents.push(event)
+          }
+        })
+        console.log(matchingEvents)
+        setEvents(matchingEvents)
+        store.dispatch(updateEvents(matchingEvents))
+      }
+      console.log(store.getState())
     }
-    console.log(store.getState())
   }
 
-  useEffect( async () => {
-    const memberKey = localStorage.key(0)
-    const userid = localStorage.getItem(memberKey)
+  useEffect(() => {
 
-    const date = new Date()
-    const month = date.getMonth() + 1
-    const day = date.getDate()
-    const year = date.getFullYear()
+    const dateFunction = async () => {
+      const memberKey = localStorage.key(0)
+      const userid = localStorage.getItem(memberKey)
 
-    // await setCurrentDate(`${year}-${month}-${day}`)
-    let currentDate = `${year}-${month}-${day}`
-    handleDateChange(null, currentDate)
-    // await setCurrentDate(`${year}-${month}-${day}`)
-    // console.log(currentDate)
-    // if(currentDate) {
-    //   //   // const res = await fetch(`http://localhost:8080/api/events/${currentDate}/${userid}`)
+      const date = new Date()
+      const month = date.getMonth() + 1
+      const day = date.getDate()
+      const year = date.getFullYear()
 
-    //   //   // if(res.ok) {
-    //   //   //   const data = await res.json()
-    //   //   //   setEvents[data]
-    //   //   //   // console.log(data)
-    //   //   // }
-    //   await handleDateChange(null, )
-    // }
+      // await setCurrentDate(`${year}-${month}-${day}`)
+      let currentDate = `${year}-${month}-${day}`
+      await setCurrentDate(`${month}-${day}-${year}`)
+      await handleDateChange(null, currentDate)
+    }
 
-
+    dateFunction()
   }, [])
+
+  let defaultDate;
 
   const getDate = () => {
     const date = new Date()
     const month = date.getMonth() + 1
-    const day = date.getDate()
+    let day = date.getDate()
+    if(day < 10) {
+      day = `0`+ date.getDate()
+    }
     const year = date.getFullYear()
 
     // setCurrentDate(`${year}-${month}-${day}`)
 
     // store.dispatch(updateDate([`${year}-${month}-${day}`]))
-    return `${year}-${month}-${day}`
+    console.log(`${year}-${month}-0${day}`)
+    return`${year}-${month}-${day}`
   }
 
+  // getDate()
 
 
   const useStyles = makeStyles((theme) => ({
